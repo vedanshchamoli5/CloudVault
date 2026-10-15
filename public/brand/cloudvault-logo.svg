@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 100" fill="none" width="100%" height="100%">
+  <defs>
+    <linearGradient id="cvVaultGrad" x1="10" y1="10" x2="90" y2="90" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#173A63" />
+      <stop offset="100%" stop-color="#285F9E" />
+    </linearGradient>
+    <linearGradient id="cvAccentGrad" x1="20" y1="20" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#477DB7" />
+      <stop offset="100%" stop-color="#285F9E" />
+    </linearGradient>
+    <filter id="cvShadow" x="0" y="2" width="100" height="100" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#173A63" flood-opacity="0.12" />
+    </filter>
+  </defs>
+
+  <!-- Vault Shield / Cloud Geometric Symbol -->
+  <g filter="url(#cvShadow)">
+    <!-- Base Rounded Shield Container -->
+    <path d="M 22 30 C 22 20 30 14 50 14 C 70 14 78 20 78 30 C 78 54 62 74 50 82 C 38 74 22 54 22 30 Z" 
+          fill="url(#cvVaultGrad)" />
+    
+    <!-- Document / Vault Inner Layer -->
+    <path d="M 33 28 C 33 24 36 22 41 22 L 56 22 L 67 33 L 67 60 C 67 64 64 67 60 67 L 41 67 C 36 67 33 64 33 60 Z" 
+          fill="#FFFFFF" fill-opacity="0.95" />
+    
+    <!-- Document Fold -->
+    <path d="M 56 22 L 56 33 L 67 33 Z" fill="#DCE9F8" />
+    
+    <!-- Secure Vault Dial / Central Core -->
+    <circle cx="50" cy="47" r="9" fill="#173A63" />
+    <circle cx="50" cy="47" r="6" fill="#FFFFFF" />
+    <circle cx="50" cy="47" r="3.5" fill="#285F9E" />
+    
+    <!-- Cloud & Vault Nodes -->
+    <rect x="38" y="45.5" width="4" height="3" rx="1" fill="#477DB7" />
+    <rect x="58" y="45.5" width="4" height="3" rx="1" fill="#477DB7" />
+    <rect x="48.5" y="35" width="3" height="4" rx="1" fill="#477DB7" />
+    <rect x="48.5" y="55" width="3" height="4" rx="1" fill="#477DB7" />
+  </g>
+
+  <!-- Typography: CloudVault Wordmark -->
+  <text x="100" y="59" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif" font-weight="800" font-size="36" fill="#173A63" letter-spacing="-0.5">Cloud<tspan fill="#285F9E" font-weight="600">Vault</tspan></text>
+
+  <!-- Tagline / Subtitle Pill -->
+  <rect x="306" y="38" width="138" height="24" rx="6" fill="#EEF3FA" stroke="#DCE5EF" stroke-width="1" />
+  <text x="375" y="54" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif" font-weight="600" font-size="11" fill="#477DB7" text-anchor="middle" letter-spacing="0.5">STORAGE SUITE</text>
+</svg>

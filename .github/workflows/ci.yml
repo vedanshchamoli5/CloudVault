@@ -1,0 +1,67 @@
+name: CloudVault CI
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  build-and-test:
+    name: Lint, Test, TypeCheck & Build
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: cloudvault
+          POSTGRES_PASSWORD: cloudvault_secret_password
+          POSTGRES_DB: cloudvault
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Prisma Client
+        run: npx prisma generate
+        env:
+          DATABASE_URL: "postgresql://cloudvault:cloudvault_secret_password@localhost:5432/cloudvault?schema=public"
+
+      - name: Run Database Push / Migrations
+        run: npx prisma db push
+        env:
+          DATABASE_URL: "postgresql://cloudvault:cloudvault_secret_password@localhost:5432/cloudvault?schema=public"
+
+      - name: Run Unit & Integration Tests
+        run: npm run test
+        env:
+          NODE_ENV: test
+          AUTH_SECRET: "ci_test_super_secret_auth_key_32_characters_long"
+          STORAGE_DRIVER: "local"
+
+      - name: Run TypeScript Type Check
+        run: npm run type-check
+
+      - name: Run Next.js Production Build
+        run: npm run build
+        env:
+          DATABASE_URL: "postgresql://cloudvault:cloudvault_secret_password@localhost:5432/cloudvault?schema=public"
+          AUTH_SECRET: "ci_test_super_secret_auth_key_32_characters_long"
+          STORAGE_DRIVER: "local"

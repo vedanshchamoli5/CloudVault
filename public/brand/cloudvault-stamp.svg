@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 380" fill="none" width="100%" height="100%">
+  <defs>
+    <!-- Text Path for Circular Typography -->
+    <path id="stampTextCircleUpper" d="M 60 190 A 130 130 0 1 1 320 190" />
+    <path id="stampTextCircleLower" d="M 320 190 A 130 130 0 0 1 60 190" />
+    
+    <linearGradient id="stampInkGrad" x1="50" y1="50" x2="330" y2="330" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#173A63" />
+      <stop offset="100%" stop-color="#285F9E" />
+    </linearGradient>
+
+    <filter id="inkTexture" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.5" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+  </defs>
+
+  <g transform="rotate(-3 190 190)">
+    <!-- Outer Perforated / Scalloped Ring -->
+    <circle cx="190" cy="190" r="172" stroke="#285F9E" stroke-width="2.5" stroke-dasharray="7 5" opacity="0.85" />
+    
+    <!-- Outer Solid Ring -->
+    <circle cx="190" cy="190" r="162" stroke="#173A63" stroke-width="4" />
+    
+    <!-- Inner Fine Ring -->
+    <circle cx="190" cy="190" r="146" stroke="#285F9E" stroke-width="1.5" />
+    
+    <!-- Core Boundary Ring -->
+    <circle cx="190" cy="190" r="92" stroke="#173A63" stroke-width="2.5" />
+    <circle cx="190" cy="190" r="86" stroke="#477DB7" stroke-width="1" stroke-dasharray="3 3" />
+
+    <!-- Circular Curved Text -->
+    <!-- Upper Arc: CURATED / ENGINEERED BY -->
+    <text font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', monospace, sans-serif" 
+          font-size="14.5" 
+          font-weight="800" 
+          fill="#173A63" 
+          letter-spacing="4.2">
+      <textPath href="#stampTextCircleUpper" startOffset="50%" text-anchor="middle">
+        CURATED / ENGINEERED BY
+      </textPath>
+    </text>
+
+    <!-- Lower Arc: VEDANSH CHAMOLI -->
+    <text font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', monospace, sans-serif" 
+          font-size="16" 
+          font-weight="900" 
+          fill="#285F9E" 
+          letter-spacing="5">
+      <textPath href="#stampTextCircleLower" startOffset="50%" text-anchor="middle">
+        VEDANSH CHAMOLI
+      </textPath>
+    </text>
+
+    <!-- Stars Separators on the sides -->
+    <g fill="#477DB7">
+      <polygon points="50,190 53,196 60,196 55,200 57,207 50,203 43,207 45,200 40,196 47,196" transform="translate(4, -8) scale(0.9)" />
+      <polygon points="330,190 333,196 340,196 335,200 337,207 330,203 323,207 325,200 320,196 327,196" transform="translate(-10, -8) scale(0.9)" />
+    </g>
+
+    <!-- Center Vault Emblem -->
+    <g transform="translate(162, 142)">
+      <!-- Shield / Vault Symbol -->
+      <path d="M 4 14 C 4 7 10 3 28 3 C 46 3 52 7 52 14 C 52 35 38 51 28 58 C 18 51 4 35 4 14 Z" 
+            fill="#173A63" />
+      <path d="M 14 13 C 14 10 16 9 20 9 L 31 9 L 39 17 L 39 38 C 39 41 37 43 34 43 L 20 43 C 17 43 14 41 14 38 Z" 
+            fill="#FFFFFF" />
+      <path d="M 31 9 L 31 17 L 39 17 Z" fill="#DCE9F8" />
+      <circle cx="28" cy="27" r="5" fill="#173A63" />
+      <circle cx="28" cy="27" r="2.5" fill="#FFFFFF" />
+    </g>
+
+    <!-- Center Seal Verification Badge -->
+    <rect x="130" y="210" width="120" height="20" rx="4" fill="#EEF3FA" stroke="#285F9E" stroke-width="1.2" />
+    <text x="190" y="224" 
+          font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" 
+          font-size="10.5" 
+          font-weight="800" 
+          fill="#173A63" 
+          text-anchor="middle" 
+          letter-spacing="1.5">VERIFIED BUILD</text>
+  </g>
+</svg>
