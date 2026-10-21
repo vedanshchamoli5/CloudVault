@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { hashPassword, createSessionToken, getSessionCookieOptions } from "@/lib/auth";
 import { registerSchema } from "@/lib/validators";
 import { logAuditEvent } from "@/lib/audit";
+import { formatDatabaseError } from "@/lib/db-error";
 
 export async function POST(req: NextRequest) {
   try {
@@ -74,10 +75,11 @@ export async function POST(req: NextRequest) {
     return response;
   } catch (error: any) {
     console.error("[Register Error]", error);
+    const friendlyMessage = formatDatabaseError(error);
     return NextResponse.json(
       {
         error: "Internal server error",
-        message: error?.message || "An unexpected error occurred",
+        message: friendlyMessage,
         code: error?.code,
       },
       { status: 500 }

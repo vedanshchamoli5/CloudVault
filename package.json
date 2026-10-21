@@ -7,17 +7,17 @@
   "license": "MIT",
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build",
+    "build": "node scripts/prepare-prisma.js && prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "prisma:generate": "prisma generate",
+    "prisma:generate": "node scripts/prepare-prisma.js && prisma generate",
     "prisma:migrate": "prisma migrate dev",
-    "prisma:push": "prisma db push",
+    "prisma:push": "node scripts/prepare-prisma.js && prisma db push",
     "seed": "node scripts/seed.js",
-    "postinstall": "prisma generate"
+    "postinstall": "node scripts/prepare-prisma.js && prisma generate"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.670.0",
