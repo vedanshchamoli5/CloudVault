@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Edit2, X, Loader2 } from "lucide-react";
-import { useToast } from "@/components/Toast";
+import { useToast } from "../Toast";
 
 interface RenameModalProps {
   isOpen: boolean;

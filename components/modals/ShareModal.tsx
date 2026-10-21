@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Share2, X, Copy, Check, Trash2, Shield, Calendar, Download, Loader2 } from "lucide-react";
-import { useToast } from "@/components/Toast";
+import { useToast } from "../Toast";
 
 interface ShareModalProps {
   isOpen: boolean;

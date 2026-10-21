@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Folder, FolderTree, X, Loader2, ArrowRight } from "lucide-react";
-import { useToast } from "@/components/Toast";
+import { useToast } from "../Toast";
 
 interface MoveModalProps {
   isOpen: boolean;

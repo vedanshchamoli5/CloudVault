@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { FolderPlus, X, Loader2 } from "lucide-react";
-import { useToast } from "@/components/Toast";
+import { useToast } from "../Toast";
 
 interface NewFolderModalProps {
   isOpen: boolean;

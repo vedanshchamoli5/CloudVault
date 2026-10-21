@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { History, X, Download, RotateCcw, Upload, Check, Loader2, FileCode } from "lucide-react";
-import { useToast } from "@/components/Toast";
+import { useToast } from "../Toast";
 
 interface VersionHistoryModalProps {
   isOpen: boolean;

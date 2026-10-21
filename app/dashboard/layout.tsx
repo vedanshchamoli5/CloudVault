@@ -17,7 +17,7 @@ import {
   ChevronRight,
   Database,
 } from "lucide-react";
-import { ToastProvider, useToast } from "@/components/Toast";
+import { ToastProvider } from "@/components/Toast";
 
 interface UserInfo {
   name: string;

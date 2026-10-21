@@ -1,18 +1,21 @@
+
 services:
   postgres:
     image: postgres:16-alpine
     container_name: cloudvault_postgres
     restart: unless-stopped
     environment:
-      POSTGRES_USER: cloudvault
-      POSTGRES_PASSWORD: cloudvault_secret_password
-      POSTGRES_DB: cloudvault
+      POSTGRES_USER: ${POSTGRES_USER:-cloudvault}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-cloudvault_dev_password}
+      POSTGRES_DB: ${POSTGRES_DB:-cloudvault}
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U cloudvault -d cloudvault"]
+      test:
+        - CMD-SHELL
+        - pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}
       interval: 5s
       timeout: 5s
       retries: 5
@@ -21,37 +24,53 @@ services:
     image: minio/minio:latest
     container_name: cloudvault_minio
     restart: unless-stopped
-    command: server /data --console-address ":9001"
+    command:
+      - server
+      - /data
+      - --console-address
+      - ":9001"
     environment:
-      MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadminpassword
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadminpassword}
     ports:
-      - "9000:9000"
-      - "9001:9001"
+      - "127.0.0.1:9000:9000"
+      - "127.0.0.1:9001:9001"
     volumes:
       - minio_data:/data
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
 
   createbuckets:
     image: minio/mc:latest
     container_name: cloudvault_minio_init
+    restart: "no"
     depends_on:
       minio:
-        condition: service_healthy
-    entrypoint: >
-      /bin/sh -c "
-      /usr/bin/mc alias set myminio http://minio:9000 minioadmin minioadminpassword;
-      /usr/bin/mc mb myminio/cloudvault-storage --ignore-existing;
-      /usr/bin/mc anonymous set none myminio/cloudvault-storage;
-      exit 0;
-      "
+        condition: service_started
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadminpassword}
+      MINIO_BUCKET: ${MINIO_BUCKET:-cloudvault-storage}
+    entrypoint: ["/bin/sh", "-c"]
+    command: |
+      set -eu
+
+      attempt=0
+      until mc alias set myminio http://minio:9000 "$${MINIO_ROOT_USER}" "$${MINIO_ROOT_PASSWORD}" >/dev/null 2>&1; do
+        attempt=$$((attempt + 1))
+        if [ "$$attempt" -ge 30 ]; then
+          echo "ERROR: MinIO did not become ready." >&2
+          exit 1
+        fi
+        echo "Waiting for MinIO..."
+        sleep 2
+      done
+
+      mc mb --ignore-existing "myminio/$${MINIO_BUCKET}"
+      mc anonymous set none "myminio/$${MINIO_BUCKET}"
+      echo "CloudVault bucket initialized successfully."
 
 volumes:
   postgres_data:
     driver: local
+
   minio_data:
     driver: local

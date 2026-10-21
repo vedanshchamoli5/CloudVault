@@ -2,7 +2,7 @@
 
 import React, { useState, useRef } from "react";
 import { UploadCloud, X, File, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
-import { useToast } from "@/components/Toast";
+import { useToast } from "../Toast";
 
 interface UploadModalProps {
   isOpen: boolean;
